@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 import './form.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
+// ...
 
 void main(List<String> args) {
   runApp(MyApp());
@@ -14,7 +18,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text("da App"),
+          title: const Text("App"),
         ),
         body: const MyForm(),
       ),
