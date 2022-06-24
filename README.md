@@ -1,4 +1,4 @@
-# stack
+# stackathon
 
 A new Flutter project.
 
