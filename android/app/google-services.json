@@ -29,6 +29,49 @@
             {
               "client_id": "181673560556-pek32n7av680ihjia2ba3gh3rmfhegof.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "181673560556-0g2g0gj3bje56199q2l3o6dh81qf4un5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ketcham.stack"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:181673560556:android:affcc480dd8359fbccd8c9",
+        "android_client_info": {
+          "package_name": "com.ketcham.stack"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "181673560556-pek32n7av680ihjia2ba3gh3rmfhegof.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYB3GEdNc8XPCZLQDdtzXF6zz-1dDkPcQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "181673560556-pek32n7av680ihjia2ba3gh3rmfhegof.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "181673560556-0g2g0gj3bje56199q2l3o6dh81qf4un5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ketcham.stack"
+              }
             }
           ]
         }

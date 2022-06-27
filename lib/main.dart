@@ -1,14 +1,22 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'dart:math';
-import './form.dart';
+
 import 'package:firebase_core/firebase_core.dart';
+import 'utils.dart';
+import 'auth.dart';
 import 'firebase_options.dart';
+import 'posts.dart';
+import 'home.dart';
 
-// ...
-
-void main(List<String> args) {
+Future<void> main(List<String> args) async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MyApp());
 }
+
+final navigatorKey = GlobalKey<NavigatorState>();
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -16,11 +24,26 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      scaffoldMessengerKey: Utils.messengerKey,
+      navigatorKey: navigatorKey,
       home: Scaffold(
         appBar: AppBar(
-          title: const Text("App"),
+          title: const Text("Posts"),
         ),
-        body: const MyForm(),
+        body: StreamBuilder<User?>(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Something went wrong.'));
+            } else if (snapshot.hasData) {
+              return HomeWidget();
+            } else {
+              return AuthPage();
+            }
+          },
+        ),
       ),
     );
   }
