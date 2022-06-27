@@ -17,6 +17,7 @@ class _UserInfoState extends State<UserInfo> {
   Widget build(BuildContext context) {
     return Column(children: [
       Text(user!.email!),
+      Text(user!.uid),
       Container(
         alignment: Alignment.bottomCenter,
         child: ElevatedButton.icon(

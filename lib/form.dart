@@ -19,6 +19,7 @@ class _MyFormState extends State<MyForm> {
   final _formKey = GlobalKey<FormState>();
   final myController = TextEditingController();
   final userId = FirebaseAuth.instance.currentUser!.uid;
+  String dropDownValue = 'what';
 
   @override
   void dispose() {
@@ -26,6 +27,15 @@ class _MyFormState extends State<MyForm> {
     myController.dispose();
     super.dispose();
   }
+
+  // getFriends() async {
+  //   final data = await FirebaseFirestore.instance
+  //       .collection('users')
+  //       .where('userId', isEqualTo: userId)
+  //       .snapshots();
+
+  //   print(await data.first);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -43,23 +53,61 @@ class _MyFormState extends State<MyForm> {
               return null;
             },
           ),
+          // StreamBuilder(
+          //   stream: FirebaseFirestore.instance
+          //       .collection('users')
+          //       .where('userId', isEqualTo: userId)
+          //       .snapshots(),
+          //   builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          //     if (!snapshot.hasData) {
+          //       return Center(child: CircularProgressIndicator());
+          //     }
+          //     final data = snapshot.requireData.docs[0]['friends'];
+
+          //     final List<String> friends =
+          //         data.map((e) => e.toString()).toList();
+
+          //     return DropdownButton(
+          //       onChanged: (String? newValue) {
+          //         setState(() {
+          //           dropDownValue = newValue!;
+          //         });
+          //       },
+          //       items: friends.map<DropdownMenuItem<String>>((String value) {
+          //         return DropdownMenuItem<String>(
+          //           value: value,
+          //           child: Text(value),
+          //         );
+          //       }).toList(),
+          //     );
+          //   },
+          // ),
           ElevatedButton(
             onPressed: () {
               // Validate returns true if the form is valid, or false otherwise.
               if (_formKey.currentState!.validate()) {
                 // If the form is valid, display a snackbar. In the real world,
                 // you'd often call a server or save the information in a database.
-                final displayMessage = '$userId posted this';
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text(displayMessage)),
-                );
-                final post = {
-                  'post': myController.text,
-                  'author': userId,
-                };
+                final data = db
+                    .collection("users")
+                    .where('userId', isEqualTo: userId)
+                    .get()
+                    .then((res) {
+                  final post = {
+                    'post': myController.text,
+                    'author': userId,
+                    'hasAccess': res.docs[0]['friends'],
+                  };
 
-                db.collection('posts').add(post).then((DocumentReference doc) =>
-                    print('DocumentSnapshot added with ID: ${doc.id}'));
+                  final newPost = db.collection('posts').add(post).then(
+                      (DocumentReference doc) =>
+                          print('DocumentSnapshot added with ID: ${doc.id}'));
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('posted')),
+                  );
+                  myController.text = '';
+                  FocusManager.instance.primaryFocus?.unfocus();
+                });
               }
             },
             child: const Text('Submit'),

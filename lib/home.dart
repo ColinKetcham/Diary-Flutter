@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:stack/form.dart';
+import 'package:stack/friendposts.dart';
 import 'package:stack/posts.dart';
 import 'package:stack/user.dart';
 
@@ -24,18 +25,19 @@ class _HomeWidgetState extends State<HomeWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Navigator(
-        pages: [
-          if (_selectedIndex == 0) MaterialPage(child: MyForm()),
-          if (_selectedIndex == 1) MaterialPage(child: UserPostsWidget()),
-          if (_selectedIndex == 2) MaterialPage(child: UserPostsWidget()),
-          if (_selectedIndex == 3) MaterialPage(child: UserInfo())
-        ],
-        onPopPage: (route, result) {
-          if (route.didPop(result)) return true;
-
-          return false;
-        },
+      body: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: Navigator(
+          pages: [
+            if (_selectedIndex == 0) MaterialPage(child: MyForm()),
+            if (_selectedIndex == 1) MaterialPage(child: UserPostsWidget()),
+            if (_selectedIndex == 2) MaterialPage(child: FriendPosts()),
+            if (_selectedIndex == 3) MaterialPage(child: UserInfo())
+          ],
+          onPopPage: (route, result) {
+            return (route.didPop(result));
+          },
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
